@@ -2,14 +2,14 @@
   <div class="container">
     <div class="select-box">
       <div class="options-container">
-        <div class="option" v-on:click="selectDrop" v-for="item in vegetables" :key="item.name">
+        <div class="option" v-on:click="selectDrop" v-for="item in filterSearch" :key="item.name">
           <input type="radio" class="radio" name="category" />
           <label>{{item.name}}</label>
         </div>
       </div>
       <div class="selected" v-on:click="drop">Select an Item</div>
       <div class="search-box">
-        <input type="text" v-on:keyup="search" autofocus placeholder="This is a search input..." />
+        <input type="text" v-model="searchInput" autofocus placeholder="This is a search input..." />
       </div>
     </div>
   </div>
@@ -41,14 +41,15 @@ export default {
     },
     selectDrop: e => {
       document.querySelector(".selected").innerHTML = e.target.innerHTML;
-    },
-    search: e => {
-      let selected = document.querySelector(".selected");
-      let searchTerm = e.target.value;
-      selected.innerHTML = searchTerm;
-      if (selected.innerHTML == "") {
-        selected.textContent = "Select an Item";
-      }
+    }
+  },
+  computed: {
+    filterSearch() {
+      const search = this.searchInput.toLowerCase().trim();
+
+       if (!search) return this.vegetables;
+
+       return this.vegetables.filter(c => c.name.toLowerCase().indexOf(search) > -1);
     }
   }
 };

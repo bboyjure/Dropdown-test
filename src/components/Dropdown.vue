@@ -47,7 +47,7 @@ export default {
       let searchTerm = e.target.value;
       selected.innerHTML = searchTerm;
       if (selected.innerHTML == "") {
-        selected.textContent = "Select an Item";
+        selected.textContent = "Select an Item2";
       }
     }
   }
